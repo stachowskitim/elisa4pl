@@ -2,7 +2,7 @@
 
 BeginPackage["elisa4pl`"]
 
-elisa4pl::usage="elisa4pl[x,y,e] calculates a 4-parameter logistic regression x,y,and error values"
+elisa4pl::usage="elisa4pl[x,y,e] calculates a 4-parameter logistic regression from x,y,and error values"
 
 Begin["`Private"]
 

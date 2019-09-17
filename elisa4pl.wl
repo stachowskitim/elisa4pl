@@ -2,13 +2,13 @@
 
 BeginPackage["elisa4pl`"]
 
-elisa4pl::usage="elisa4pl[x,y,e] calculates a 4-parameter logistic regression from x,y,and error (opt) values. Outputs Log-linear graph and fit parameters."
+elisa4pl::usage="elisa4pl[x,y,e] calculates a 4-parameter logistic regression x,y,and error values"
 
 Begin["Private`"]
 
 elisa4pl[xin_,yin_,ein_:0]:=
 Module[
-{fourpl,fits,err1,err2,plotopts,plots},
+{fourpl,fits,err1,err2,plotopts,plots,colors},
 fourpl = d+(a-d)/(1+(x/c)^b);
 fits = Table[NonlinearModelFit[Thread[{xin,yin[[y]]}],fourpl,{a,b,c,d},x,MaxIterations -> \[Infinity]],{y,1,Length[yin]}];
 err1 =Table[Around[yin[[x,y]],ein[[x,y]]],{y,1,Length[yin[[1]]]},{x,1,Length[yin]}];
@@ -25,8 +25,9 @@ Table[
 ListLogLinearPlot[Thread[{xin,yin[[y]]}],Evaluate@plotopts,PlotRange->{{Min[xin],Max[xin]},{Min[yin],(Max[yin]+Max[ein])}}]
 ,{y,1,Length[fits]}]
 }];
+colors = Table[ColorData[97,y],{y,1,Length[yin]}];
 Print@plots;
-Print@Table[{ToString[y],fits[[y]]["ParameterTable"]},{y,1,Length[fits]}];
+Print@Table[{colors[[y]],fits[[y]]["ParameterTable"]},{y,1,Length[fits]}];
 Export["elisa.pdf",plots];
 ]
 

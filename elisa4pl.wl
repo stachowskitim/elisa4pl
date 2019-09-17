@@ -13,7 +13,7 @@ fourpl = d+(a-d)/(1+(x/c)^b);
 fits = Table[NonlinearModelFit[Thread[{xin,yin[[y]]}],fourpl,{a,b,c,d},x,MaxIterations -> \[Infinity]],{y,1,Length[yin]}];
 err1 =Table[Around[yin[[x,y]],ein[[x,y]]],{y,1,Length[yin[[1]]]},{x,1,Length[yin]}];
 err2=Table[err1[[All,y]],{y,1,Length[yin]}];
-plotopts = {FrameStyle->Black,Frame->True,FrameTicksStyle->14,PlotStyle->ColorData[97,y]};
+plotopts = {PlotRange->All,FrameStyle->Black,Frame->True,FrameTicksStyle->14,PlotStyle->ColorData[97,y]};
 plots=Show[{
 Table[
 LogLinearPlot[fits[[y]][x],{x,Min[xin],Max[xin]},Evaluate@plotopts]
@@ -27,13 +27,16 @@ ListLogLinearPlot[Thread[{xin,yin[[y]]}],Evaluate@plotopts,PlotRange->{{Min[xin]
 }];
 colors = Table[ColorData[97,y],{y,1,Length[yin]}];
 Print@plots;
-Print@Table[{colors[[y]],fits[[y]]["ParameterTable"]},{y,1,Length[fits]}];
+Print@Table[{ToString[y],colors[[y]],fits[[y]]["ParameterTable"]},{y,1,Length[fits]}];
 Export["elisa.pdf",plots];
 ]
 
 End[]
 
 EndPackage[]
+
+
+
 
 
 
